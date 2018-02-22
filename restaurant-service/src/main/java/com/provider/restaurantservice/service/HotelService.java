@@ -22,4 +22,12 @@ public class HotelService {
         return hotelRepository.findByName(name);
     }
 
+    public Hotel addItems(Hotel hotel) {
+        return hotelRepository.save(hotel);
+    }
+
+    public Hotel getHotel(Integer id) {
+        return hotelRepository.findOne(id);
+    }
+
 }

@@ -9,6 +9,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.provider.restaurantservice.RestaurantServiceApplication;
 import com.provider.restaurantservice.domain.Hotel;
+import com.provider.restaurantservice.domain.Item;
 import com.provider.restaurantservice.service.HotelService;
 
 import org.junit.Test;
@@ -27,13 +28,18 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 @WebMvcTest(HotelController.class)
 public class HotelControllerTest {
 
-    private static final String ADD_HOTEL_URI= "/provider/hotel";
+    private static final String ADD_HOTEL_URI= "/provider/hotels";
+    private static final String ADD_ITEMS = "/provider/hotels/1";
 
     private static final String VALID_HOTEL_REQUEST_JSON = "{\"hotel_id\":1,\"name\":\"Hotel-A\"," +
             "\"address\":{\"id\":1,\"street\":\"Dominian Bvld\",\"streetNumber\":\"12\"," +
             "\"city\":\"GlenAllen\",\"zipcode\":\"23060\",\"state\":\"VA\"},\"items\":[{\"id\":1," +
             "\"name\":\"Fish Fry\",\"isVeggie\":false,\"price\":5.99,\"availableFrom\":8.0," +
             "\"availableTo\":22.0}]}";
+
+    private static final String VALID_ITEM_FOR_HOTEL = "[{\"name\":\"Fish Fry\"," +
+            "\"isVeggie\":false,\"price\":5.99,\"availableFrom\":8.0," +
+            "\"availableTo\":22.0}]";
 
     @Autowired
     private MockMvc mockMvc;
@@ -58,9 +64,30 @@ public class HotelControllerTest {
         Hotel hotel = new Hotel();
         when(hotelService.getHotelByName(any())).thenReturn(hotel);
         mockMvc.perform(MockMvcRequestBuilders.get(ADD_HOTEL_URI+"/"+"Hotel-A")
-                .contentType(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON)
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON)
                 .content(VALID_HOTEL_REQUEST_JSON))
-                .andExpect(status().isOk()).andExpect(content().json(objectMapper
+                .andExpect(status().isOk())
+                .andExpect(content().json(objectMapper
                 .writeValueAsString(hotel)));
+    }
+
+    @Test
+    public void addItem_toExistingHotel_saveItemsWithHotel() throws Exception {
+        Item item = new Item();
+        item.setName("Samosa");
+        item.setPrice(2.50f);
+        item.setVeggie(true);
+        item.setAvailableFrom(16.00f);
+        item.setAvailableTo(20.00f);
+        Hotel hotel = new Hotel();
+        hotel.getItems().add(item);
+        when(hotelService.getHotel(any())).thenReturn(hotel);
+        when(hotelService.addItems(hotel)).thenReturn(hotel);
+        mockMvc.perform(post(ADD_ITEMS)
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON)
+                .content(VALID_ITEM_FOR_HOTEL))
+                .andExpect(status().isCreated());
     }
 }
