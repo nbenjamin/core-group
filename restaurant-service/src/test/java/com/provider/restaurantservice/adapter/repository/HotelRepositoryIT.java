@@ -51,6 +51,10 @@ public class HotelRepositoryIT {
 
         Hotel existingHotel = subject.findOne(actual.getHotel_id());
         existingHotel.getItems().addAll(Collections.singleton(item));
+        assertThat(existingHotel.getItems().stream().findFirst().get().isAvaliableAtLunch(), is
+                (equalTo(Boolean.TRUE)));
+        assertThat(existingHotel.getItems().stream().findFirst().get().isAvaliableAtSnack(), is
+                (equalTo(Boolean.FALSE)));
         Hotel updatedHotel = subject.save(existingHotel);
         assertThat(updatedHotel.getHotel_id(), is(actual.getHotel_id()));
 
@@ -73,6 +77,10 @@ public class HotelRepositoryIT {
         item.setName("Fish Fry");
         item.setPrice(5.99f);
         item.setVeggie(Boolean.FALSE);
+        item.setAvaliableAtBreakfast(Boolean.FALSE);
+        item.setAvaliableAtLunch(Boolean.TRUE);
+        item.setAvaliableAtSnack(Boolean.FALSE);
+        item.setAvaliableAtDinner(Boolean.TRUE);
         item.setAvailableTo(22.00f);
         item.setAvailableFrom(8.00f);
 

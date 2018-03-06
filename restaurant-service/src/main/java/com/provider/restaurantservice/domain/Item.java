@@ -23,6 +23,10 @@ public class Item implements Serializable {
     private Float price;
     private Float availableFrom;
     private Float availableTo;
+    private boolean isAvaliableAtBreakfast;
+    private boolean isAvaliableAtLunch;
+    private boolean isAvaliableAtSnack;
+    private boolean isAvaliableAtDinner;
 //    @Enumerated
 //    private Set<DayOfWeek> dayOfWeeks =new HashSet();
 
@@ -82,6 +86,37 @@ public class Item implements Serializable {
 //        this.dayOfWeeks = dayOfWeeks;
 //    }
 
+    public boolean isAvaliableAtBreakfast() {
+        return isAvaliableAtBreakfast;
+    }
+
+    public void setAvaliableAtBreakfast(boolean avaliableAtBreakfast) {
+        isAvaliableAtBreakfast = avaliableAtBreakfast;
+    }
+
+    public boolean isAvaliableAtLunch() {
+        return isAvaliableAtLunch;
+    }
+
+    public void setAvaliableAtLunch(boolean avaliableAtLunch) {
+        isAvaliableAtLunch = avaliableAtLunch;
+    }
+
+    public boolean isAvaliableAtSnack() {
+        return isAvaliableAtSnack;
+    }
+
+    public void setAvaliableAtSnack(boolean avaliableAtSnack) {
+        isAvaliableAtSnack = avaliableAtSnack;
+    }
+
+    public boolean isAvaliableAtDinner() {
+        return isAvaliableAtDinner;
+    }
+
+    public void setAvaliableAtDinner(boolean avaliableAtDinner) {
+        isAvaliableAtDinner = avaliableAtDinner;
+    }
 
     @Override
     public boolean equals(Object obj) {
