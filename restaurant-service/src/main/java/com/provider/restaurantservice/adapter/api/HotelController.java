@@ -36,9 +36,9 @@ public class HotelController {
     }
 
     @GetMapping("/hotels/{name}")
-    public ResponseEntity<Hotel> getHotelByName(@PathVariable("name") String name)  throws
+    public ResponseEntity<List<Hotel>> getHotelByName(@PathVariable("name") String name)  throws
             Exception {
-        return Optional.ofNullable(hotelService.getHotelByName(name)).map(h-> ResponseEntity
+        return Optional.ofNullable(hotelService.getHotelsByName(name)).map(h-> ResponseEntity
                 .status(HttpStatus.OK).body(h)).orElseThrow(() -> new Exception("Unable to find " +
                 "Hotel with this name"));
     }

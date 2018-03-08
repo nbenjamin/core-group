@@ -23,6 +23,9 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @RunWith(SpringRunner.class)
 @ContextConfiguration(classes = RestaurantServiceApplication.class)
 @WebMvcTest(HotelController.class)
@@ -61,15 +64,16 @@ public class HotelControllerTest {
 
     @Test
     public void getHotelByName_withValidName_returnHotelWithFullDetails() throws Exception {
-        Hotel hotel = new Hotel();
-        when(hotelService.getHotelByName(any())).thenReturn(hotel);
+        List<Hotel> hotels = new ArrayList();
+        hotels.add(new Hotel());
+        when(hotelService.getHotelsByName(any())).thenReturn(hotels);
         mockMvc.perform(MockMvcRequestBuilders.get(ADD_HOTEL_URI+"/"+"Hotel-A")
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON)
                 .content(VALID_HOTEL_REQUEST_JSON))
                 .andExpect(status().isOk())
                 .andExpect(content().json(objectMapper
-                .writeValueAsString(hotel)));
+                .writeValueAsString(hotels)));
     }
 
     @Test

@@ -5,6 +5,8 @@ import com.provider.restaurantservice.domain.Hotel;
 
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class HotelService {
 
@@ -28,6 +30,10 @@ public class HotelService {
 
     public Hotel getHotel(Integer id) {
         return hotelRepository.findOne(id);
+    }
+
+    public List<Hotel> getHotelsByName(String name) {
+        return hotelRepository.findByNameEquals(name);
     }
 
 }
