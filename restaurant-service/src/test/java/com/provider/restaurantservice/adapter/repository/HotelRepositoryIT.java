@@ -6,6 +6,7 @@ import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 import com.provider.restaurantservice.domain.Address;
+import com.provider.restaurantservice.domain.CuisineType;
 import com.provider.restaurantservice.domain.Hotel;
 import com.provider.restaurantservice.domain.Item;
 
@@ -57,14 +58,14 @@ public class HotelRepositoryIT {
                 (equalTo(Boolean.FALSE)));
         Hotel updatedHotel = subject.save(existingHotel);
         assertThat(updatedHotel.getHotel_id(), is(actual.getHotel_id()));
-
         assertThat(updatedHotel.getItems().size(), is(equalTo(2)));
-
+        assertThat(updatedHotel.getCuisineType(), is(equalTo(CuisineType.SOUTH_INDIAN)));
     }
 
     private Hotel createHotel() {
         Hotel hotel = new Hotel();
         hotel.setName("Hotel-A");
+        hotel.setCuisineType(CuisineType.SOUTH_INDIAN);
 
         Address address = new Address();
         address.setCity("GlenAllen");

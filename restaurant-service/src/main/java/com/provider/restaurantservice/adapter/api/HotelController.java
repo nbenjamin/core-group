@@ -28,7 +28,6 @@ public class HotelController {
 
     @PostMapping("/hotels")
     public ResponseEntity<Hotel> addHotel(@RequestBody Hotel hotel) throws Exception {
-        Hotel temp = hotelService.createHotel(hotel);
         return Optional.ofNullable(hotelService.createHotel(hotel)).map(h -> ResponseEntity.status
                 (HttpStatus.CREATED).body(h)).orElseThrow(() -> new Exception("Unable to " +
                "register Hotel " +
@@ -36,7 +35,7 @@ public class HotelController {
     }
 
     @GetMapping("/hotels/{name}")
-    public ResponseEntity<List<Hotel>> getHotelByName(@PathVariable("name") String name)  throws
+    public ResponseEntity<List<Hotel>> getHotelsByName(@PathVariable("name") String name)  throws
             Exception {
         return Optional.ofNullable(hotelService.getHotelsByName(name)).map(h-> ResponseEntity
                 .status(HttpStatus.OK).body(h)).orElseThrow(() -> new Exception("Unable to find " +

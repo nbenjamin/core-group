@@ -11,6 +11,7 @@ import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -32,6 +33,8 @@ public class Hotel implements Serializable {
     private Address address;
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private Set<Item> items = new HashSet();
+    @Enumerated
+    private CuisineType cuisineType;
 
     public Integer getHotel_id() {
         return hotel_id;
@@ -63,6 +66,14 @@ public class Hotel implements Serializable {
 
     public void setItems(Set<Item> items) {
         this.items = items;
+    }
+
+    public CuisineType getCuisineType() {
+        return cuisineType;
+    }
+
+    public void setCuisineType(CuisineType cuisineType) {
+        this.cuisineType = cuisineType;
     }
 
     @Override
