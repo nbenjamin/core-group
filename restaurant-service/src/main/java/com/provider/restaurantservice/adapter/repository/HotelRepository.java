@@ -13,8 +13,8 @@ public interface HotelRepository extends CrudRepository<Hotel, Integer> {
 
     Hotel save(Hotel hotel);
 
-    Hotel findByName(String name);
+    Hotel findByNameIgnoreCase(String name);
 
-    List<Hotel> findByNameEquals(String name);
+    List<Hotel> findByNameEqualsIgnoreCase(String name);
 
 }

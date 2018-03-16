@@ -62,6 +62,16 @@ public class HotelRepositoryIT {
         assertThat(updatedHotel.getCuisineType(), is(equalTo(CuisineType.SOUTH_INDIAN)));
     }
 
+    @Test
+    public void findByNameEqualsIgnoreCase_withCaseSensitiveInput_returnHotels() {
+        Hotel hotel = new Hotel();
+        hotel.setName("Hotel-A");
+        hotel.setCuisineType(CuisineType.SOUTH_INDIAN);
+        subject.save(hotel);
+
+        assertThat(subject.findByNameEqualsIgnoreCase("hotel-a").size(), is(equalTo(1)));
+    }
+
     private Hotel createHotel() {
         Hotel hotel = new Hotel();
         hotel.setName("Hotel-A");
