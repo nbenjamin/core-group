@@ -21,7 +21,7 @@ public class HotelService {
     }
 
     public Hotel getHotelByName(String name) {
-        return hotelRepository.findByName(name);
+        return hotelRepository.findByNameIgnoreCase(name);
     }
 
     public Hotel addItems(Hotel hotel) {
@@ -33,7 +33,7 @@ public class HotelService {
     }
 
     public List<Hotel> getHotelsByName(String name) {
-        return hotelRepository.findByNameEquals(name);
+        return hotelRepository.findByNameEqualsIgnoreCase(name);
     }
 
 }
