@@ -35,6 +35,8 @@ public class Hotel implements Serializable {
     private Set<Item> items = new HashSet();
     @Enumerated
     private CuisineType cuisineType;
+	private String email;
+	private String password;
 
     public Integer getHotel_id() {
         return hotel_id;
@@ -76,6 +78,22 @@ public class Hotel implements Serializable {
         this.cuisineType = cuisineType;
     }
 
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+	
     @Override
     public boolean equals(Object obj) {
         return EqualsBuilder.reflectionEquals(this, obj, true);

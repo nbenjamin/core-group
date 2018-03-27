@@ -35,5 +35,9 @@ public class HotelService {
     public List<Hotel> getHotelsByName(String name) {
         return hotelRepository.findByNameEqualsIgnoreCase(name);
     }
+    
+    public Hotel findByEmail(String email) {
+        return hotelRepository.findByEmailIgnoreCase(email);
+    }
 
 }

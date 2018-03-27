@@ -11,10 +11,14 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
+
+import javax.servlet.ServletException;
 
 @RestController
 @RequestMapping("/provider")
@@ -33,6 +37,27 @@ public class HotelController {
                "register Hotel " +
                "now"));
     }
+    
+    
+    
+	@RequestMapping(value = "/login", method = RequestMethod.POST)
+	public Integer login(@RequestBody Hotel login) throws Exception {
+
+		if (login.getEmail() == null || login.getPassword() == null) {
+			throw new Exception("Please provide in username and password");
+		}
+		String email = login.getEmail();
+		String password = login.getPassword();
+				Hotel user = Optional.ofNullable(hotelService.findByEmail(email)).orElseThrow(() ->
+        new Exception("Unable to find Hotel"));
+		String pwd = user.getPassword();
+		if (!password.equals(pwd)) {
+			throw new Exception("Invalid login. Please check your name and password.");
+		}
+		return user.getHotel_id();
+	}
+	
+	
 
     @GetMapping("/hotels/{name}")
     public ResponseEntity<List<Hotel>> getHotelsByName(@PathVariable("name") String name)  throws

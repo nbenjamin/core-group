@@ -1,0 +1,9 @@
+---
+applications:
+- name: mydish
+  instances: 1
+  host: mydish
+  memory: 1G
+  domain: cfapps.io
+  path: target\restaurant-service-0.0.1-SNAPSHOT.jar
+  buildpack: https://github.com/cloudfoundry/java-buildpack

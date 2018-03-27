@@ -16,5 +16,7 @@ public interface HotelRepository extends CrudRepository<Hotel, Integer> {
     Hotel findByNameIgnoreCase(String name);
 
     List<Hotel> findByNameEqualsIgnoreCase(String name);
-
+    
+    Hotel findByEmailIgnoreCase(String email);
+    
 }
