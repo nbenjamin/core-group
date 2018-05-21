@@ -8,6 +8,7 @@ import static org.mockito.Mockito.when;
 
 import com.provider.restaurantservice.adapter.repository.HotelRepository;
 import com.provider.restaurantservice.domain.Address;
+import com.provider.restaurantservice.domain.CuisineType;
 import com.provider.restaurantservice.domain.Hotel;
 import com.provider.restaurantservice.domain.Item;
 
@@ -54,12 +55,9 @@ public class HotelServiceTest {
         item.setName("Fish Fry");
         item.setPrice(5.99f);
         item.setVeggie(Boolean.FALSE);
-        item.setAvailableTo(22.00f);
-        item.setAvailableFrom(8.00f);
+        item.setCuisineType(CuisineType.SOUTH_INDIAN);
 
         hotel.setAddress(address);
-        hotel.getItems().add(item);
-
         return hotel;
     }
 

@@ -8,6 +8,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.provider.restaurantservice.RestaurantServiceApplication;
+import com.provider.restaurantservice.domain.CuisineType;
 import com.provider.restaurantservice.domain.Hotel;
 import com.provider.restaurantservice.domain.Item;
 import com.provider.restaurantservice.service.HotelService;
@@ -82,10 +83,9 @@ public class HotelControllerTest {
         item.setName("Samosa");
         item.setPrice(2.50f);
         item.setVeggie(true);
-        item.setAvailableFrom(16.00f);
-        item.setAvailableTo(20.00f);
+        item.setCuisineType(CuisineType.SOUTH_INDIAN);
         Hotel hotel = new Hotel();
-        hotel.getItems().add(item);
+
         when(hotelService.getHotel(any())).thenReturn(hotel);
         when(hotelService.addItems(hotel)).thenReturn(hotel);
         mockMvc.perform(post(ADD_ITEMS)

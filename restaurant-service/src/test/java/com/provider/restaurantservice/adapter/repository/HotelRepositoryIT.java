@@ -41,32 +41,23 @@ public class HotelRepositoryIT {
         Hotel hotel = createHotel();
         Hotel actual = subject.save(hotel);
         assertThat(actual.getHotel_id(), is(notNullValue()));
-        assertThat(actual.getItems().size(), is(equalTo(1)));
+
 
         Item item = new Item();
         item.setName("Prawn Fry");
         item.setPrice(5.99f);
         item.setVeggie(Boolean.FALSE);
-        item.setAvailableTo(22.00f);
-        item.setAvailableFrom(8.00f);
+        item.setCuisineType(CuisineType.SOUTH_INDIAN);
 
         Hotel existingHotel = subject.findOne(actual.getHotel_id());
-        existingHotel.getItems().addAll(Collections.singleton(item));
-        assertThat(existingHotel.getItems().stream().findFirst().get().isAvaliableAtLunch(), is
-                (equalTo(Boolean.TRUE)));
-        assertThat(existingHotel.getItems().stream().findFirst().get().isAvaliableAtSnack(), is
-                (equalTo(Boolean.FALSE)));
         Hotel updatedHotel = subject.save(existingHotel);
         assertThat(updatedHotel.getHotel_id(), is(actual.getHotel_id()));
-        assertThat(updatedHotel.getItems().size(), is(equalTo(2)));
-        assertThat(updatedHotel.getCuisineType(), is(equalTo(CuisineType.SOUTH_INDIAN)));
     }
 
     @Test
     public void findByNameEqualsIgnoreCase_withCaseSensitiveInput_returnHotels() {
         Hotel hotel = new Hotel();
         hotel.setName("Hotel-A");
-        hotel.setCuisineType(CuisineType.SOUTH_INDIAN);
         subject.save(hotel);
 
         assertThat(subject.findByNameEqualsIgnoreCase("hotel-a").size(), is(equalTo(1)));
@@ -75,7 +66,6 @@ public class HotelRepositoryIT {
     private Hotel createHotel() {
         Hotel hotel = new Hotel();
         hotel.setName("Hotel-A");
-        hotel.setCuisineType(CuisineType.SOUTH_INDIAN);
 
         Address address = new Address();
         address.setCity("GlenAllen");
@@ -92,10 +82,7 @@ public class HotelRepositoryIT {
         item.setAvaliableAtLunch(Boolean.TRUE);
         item.setAvaliableAtSnack(Boolean.FALSE);
         item.setAvaliableAtDinner(Boolean.TRUE);
-        item.setAvailableTo(22.00f);
-        item.setAvailableFrom(8.00f);
-
-        hotel.getItems().add(item);
+        item.setCuisineType(CuisineType.SOUTH_INDIAN);
         hotel.setAddress(address);
         return hotel;
     }

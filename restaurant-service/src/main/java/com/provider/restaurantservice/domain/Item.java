@@ -1,5 +1,6 @@
 package com.provider.restaurantservice.domain;
 
+import javax.persistence.Enumerated;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
@@ -21,8 +22,8 @@ public class Item implements Serializable {
     private String name;
     private boolean isVeggie;
     private Float price;
-    private Float availableFrom;
-    private Float availableTo;
+    @Enumerated
+    private CuisineType cuisineType;
     private boolean isAvaliableAtBreakfast;
     private boolean isAvaliableAtLunch;
     private boolean isAvaliableAtSnack;
@@ -62,29 +63,13 @@ public class Item implements Serializable {
         this.price = price;
     }
 
-    public Float getAvailableFrom() {
-        return availableFrom;
+    public CuisineType getCuisineType() {
+        return cuisineType;
     }
 
-    public void setAvailableFrom(Float availableFrom) {
-        this.availableFrom = availableFrom;
+    public void setCuisineType(CuisineType cuisineType) {
+        this.cuisineType = cuisineType;
     }
-
-    public Float getAvailableTo() {
-        return availableTo;
-    }
-
-    public void setAvailableTo(Float availableTo) {
-        this.availableTo = availableTo;
-    }
-
-//    public Set<DayOfWeek> getDayOfWeeks() {
-//        return dayOfWeeks;
-//    }
-//
-//    public void setDayOfWeeks(Set<DayOfWeek> dayOfWeeks) {
-//        this.dayOfWeeks = dayOfWeeks;
-//    }
 
     public boolean isAvaliableAtBreakfast() {
         return isAvaliableAtBreakfast;
