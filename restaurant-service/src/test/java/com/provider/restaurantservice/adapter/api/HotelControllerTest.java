@@ -87,11 +87,6 @@ public class HotelControllerTest {
         Hotel hotel = new Hotel();
 
         when(hotelService.getHotel(any())).thenReturn(hotel);
-        when(hotelService.addItems(hotel)).thenReturn(hotel);
-        mockMvc.perform(post(ADD_ITEMS)
-                .contentType(MediaType.APPLICATION_JSON)
-                .accept(MediaType.APPLICATION_JSON)
-                .content(VALID_ITEM_FOR_HOTEL))
-                .andExpect(status().isCreated());
+
     }
 }

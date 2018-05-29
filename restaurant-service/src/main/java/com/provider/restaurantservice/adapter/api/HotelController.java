@@ -1,9 +1,7 @@
 package com.provider.restaurantservice.adapter.api;
 
-import com.provider.restaurantservice.domain.Hotel;
-import com.provider.restaurantservice.domain.Item;
-import com.provider.restaurantservice.service.HotelService;
-
+import java.util.List;
+import java.util.Optional;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,12 +12,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-
-import java.util.Date;
-import java.util.List;
-import java.util.Optional;
-
-import javax.servlet.ServletException;
+import com.provider.restaurantservice.domain.Hotel;
+import com.provider.restaurantservice.domain.Item;
+import com.provider.restaurantservice.service.HotelService;
 
 @RestController
 @RequestMapping("/provider")
@@ -76,13 +71,31 @@ public class HotelController {
         .orElse(ResponseEntity.status(HttpStatus.NOT_FOUND).build());
   }
 
+  @GetMapping("/hotels/{id}/items")
+  public ResponseEntity<List<Item>> getItemsByHotelId(@PathVariable("id") Integer id) throws
+      Exception {
+    Hotel hotel = Optional.ofNullable(hotelService.getHotel(id)).orElseThrow(() ->
+        new Exception("Unable to find Hotel"));
+    List<Item> items = hotelService.getItemsByHotelId(id);
+    if(!items.isEmpty()) {
+      return ResponseEntity.status(HttpStatus.OK).body(items);
+    }
+    return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+  }
+
   @PostMapping("/hotels/{id}/items")
   public ResponseEntity<Hotel> addItems(@PathVariable("id") Integer id, @RequestBody List<Item>
       items) throws Exception {
     Hotel hotel = Optional.ofNullable(hotelService.getHotel(id)).orElseThrow(() ->
         new Exception("Unable to find Hotel"));
-    return Optional.ofNullable(hotelService.addItems(hotel)).map(h -> ResponseEntity.status
-        (HttpStatus.CREATED).body(h)).orElseThrow(() -> new Exception("Unable to save " +
-        "Items now"));
+    try {
+      items.forEach(item -> {
+        item.setHotelId(id);
+        hotelService.addItems(item);
+      });
+      return ResponseEntity.status(HttpStatus.CREATED).build();
+    } catch (Exception e) {
+      return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+    }
   }
 }

@@ -19,6 +19,7 @@ public class Item implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
+    private Integer hotelId;
     private String name;
     private boolean isVeggie;
     private Float price;
@@ -28,8 +29,7 @@ public class Item implements Serializable {
     private boolean isAvaliableAtLunch;
     private boolean isAvaliableAtSnack;
     private boolean isAvaliableAtDinner;
-//    @Enumerated
-//    private Set<DayOfWeek> dayOfWeeks =new HashSet();
+
 
     public Integer getId() {
         return id;
@@ -37,6 +37,14 @@ public class Item implements Serializable {
 
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    public Integer getHotelId() {
+        return hotelId;
+    }
+
+    public void setHotelId(Integer hotelId) {
+        this.hotelId = hotelId;
     }
 
     public String getName() {
